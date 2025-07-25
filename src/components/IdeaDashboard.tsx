@@ -74,7 +74,7 @@ const IdeaDashboard = () => {
             <p className="text-muted-foreground mb-6">
               Start protecting your intellectual property by registering your first idea.
             </p>
-            <Button className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+            <Button variant="gradient" className="hover:shadow-glow transition-all duration-300">
               Register Your First Idea
             </Button>
           </Card>
@@ -125,7 +125,7 @@ const IdeaDashboard = () => {
                     {!idea.nftMinted ? (
                       <Button
                         onClick={() => mintNFT(idea.id, idea.title)}
-                        className="bg-gradient-neural hover:shadow-neural transition-all duration-300"
+                        variant="neural"
                       >
                         <Award className="mr-2 h-4 w-4" />
                         Mint as NFT
@@ -147,7 +147,7 @@ const IdeaDashboard = () => {
         )}
         
         <div className="text-center mt-12">
-          <Button size="lg" className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+          <Button variant="gradient" size="lg">
             <Plus className="mr-2 h-5 w-5" />
             Register Another Idea
           </Button>

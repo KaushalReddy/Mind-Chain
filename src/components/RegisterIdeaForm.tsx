@@ -138,7 +138,8 @@ const RegisterIdeaForm = () => {
               <Button
                 onClick={generateIdeaHash}
                 disabled={isHashing}
-                className="flex-1 bg-gradient-neural hover:shadow-neural transition-all duration-300"
+                variant="neural"
+                className="flex-1"
               >
                 {isHashing ? (
                   <>Generating Hash...</>
@@ -153,7 +154,8 @@ const RegisterIdeaForm = () => {
               <Button
                 onClick={registerIdea}
                 disabled={!ideaHash}
-                className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300"
+                variant="gradient"
+                className="flex-1"
               >
                 <Upload className="mr-2 h-4 w-4" />
                 Register on Blockchain

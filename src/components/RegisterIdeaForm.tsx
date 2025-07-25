@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Hash, Upload, Lightbulb } from "lucide-react";
+import { Hash, Upload, Lightbulb, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useWallet } from "@/hooks/useWallet";
 
 const RegisterIdeaForm = () => {
+  const { isConnected, account, formatAddress } = useWallet();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -44,6 +46,15 @@ const RegisterIdeaForm = () => {
   };
 
   const registerIdea = () => {
+    if (!isConnected || !account) {
+      toast({
+        title: "Wallet Not Connected",
+        description: "Please connect your wallet before registering an idea.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!ideaHash) {
       toast({
         title: "Generate Hash First",
@@ -56,7 +67,7 @@ const RegisterIdeaForm = () => {
     // Simulate blockchain transaction
     toast({
       title: "Idea Registered! 🎉",
-      description: "Your idea has been timestamped on the blockchain.",
+      description: `Your idea has been timestamped on the blockchain from wallet ${formatAddress(account)}.`,
     });
     
     // Reset form
@@ -78,6 +89,27 @@ const RegisterIdeaForm = () => {
         </div>
 
         <Card className="p-8 bg-card/50 border-primary/20 backdrop-blur-sm">
+          {!isConnected && (
+            <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg flex items-center gap-3">
+              <AlertCircle className="h-5 w-5 text-yellow-500" />
+              <div>
+                <p className="text-sm font-medium text-yellow-500">Wallet Not Connected</p>
+                <p className="text-xs text-muted-foreground">Please connect your wallet to register ideas on the blockchain.</p>
+              </div>
+            </div>
+          )}
+          
+          {isConnected && account && (
+            <div className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+              <p className="text-sm font-medium text-primary-glow">
+                Connected Wallet: {formatAddress(account)}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Ideas will be registered to this wallet address
+              </p>
+            </div>
+          )}
+
           <div className="space-y-6">
             <div>
               <Label htmlFor="title" className="text-sm font-medium">
@@ -153,12 +185,12 @@ const RegisterIdeaForm = () => {
               
               <Button
                 onClick={registerIdea}
-                disabled={!ideaHash}
+                disabled={!ideaHash || !isConnected}
                 variant="gradient"
                 className="flex-1"
               >
                 <Upload className="mr-2 h-4 w-4" />
-                Register on Blockchain
+                {!isConnected ? "Connect Wallet First" : "Register on Blockchain"}
               </Button>
             </div>
           </div>

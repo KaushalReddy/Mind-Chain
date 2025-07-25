@@ -74,7 +74,13 @@ const IdeaDashboard = () => {
             <p className="text-muted-foreground mb-6">
               Start protecting your intellectual property by registering your first idea.
             </p>
-            <Button variant="gradient" className="hover:shadow-glow transition-all duration-300">
+            <Button 
+              variant="gradient" 
+              onClick={() => {
+                const registerSection = document.getElementById('register');
+                registerSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Register Your First Idea
             </Button>
           </Card>
@@ -147,7 +153,14 @@ const IdeaDashboard = () => {
         )}
         
         <div className="text-center mt-12">
-          <Button variant="gradient" size="lg">
+          <Button 
+            variant="gradient" 
+            size="lg"
+            onClick={() => {
+              const registerSection = document.getElementById('register');
+              registerSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
             <Plus className="mr-2 h-5 w-5" />
             Register Another Idea
           </Button>
